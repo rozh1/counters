@@ -40,6 +40,12 @@ if (isset($_GET['page']))
 			$pageinfo['file'] = "logout.php";
 			break;
 			
+		case "settings":
+			$pageinfo['title'] = "Настройки";
+			$pageinfo['page'] = "settings";
+			$pageinfo['file'] = "settings.php";
+			break;
+			
 		default:
 			$pageinfo['title'] = "Страница не найдена";
 			$pageinfo['page'] = "error404";

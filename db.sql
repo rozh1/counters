@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Мар 08 2018 г., 17:44
+-- Время создания: Мар 09 2018 г., 13:03
 -- Версия сервера: 10.1.30-MariaDB
 -- Версия PHP: 7.2.1
 
@@ -27,6 +27,45 @@ USE `counters`;
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `counters`
+--
+
+CREATE TABLE `counters` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `flat_id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `number` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `counter_values`
+--
+
+CREATE TABLE `counter_values` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `counter_id` int(11) NOT NULL,
+  `date` datetime NOT NULL,
+  `value` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `flats`
+--
+
+CREATE TABLE `flats` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `address` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `users`
 --
 
@@ -40,13 +79,26 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Дамп данных таблицы `users`
---
-
-
---
 -- Индексы сохранённых таблиц
 --
+
+--
+-- Индексы таблицы `counters`
+--
+ALTER TABLE `counters`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `counter_values`
+--
+ALTER TABLE `counter_values`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `flats`
+--
+ALTER TABLE `flats`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Индексы таблицы `users`
@@ -59,10 +111,28 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT для таблицы `counters`
+--
+ALTER TABLE `counters`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT для таблицы `counter_values`
+--
+ALTER TABLE `counter_values`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT для таблицы `flats`
+--
+ALTER TABLE `flats`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

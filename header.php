@@ -63,9 +63,7 @@
                     <i class="fa fa-user fa-fw"></i> <?php echo $userinfo['login']; ?> <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu dropdown-user">
-                    <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                    </li>
-                    <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                    <li><a href="index.php?page=settings" class="<?php echo $pageinfo['page']=='settings'? "active" : "" ?>"><i class="fa fa-gear fa-fw"></i> Настройки</a>
                     </li>
                     <li class="divider"></li>
                     <li><a href="index.php?page=logout"><i class="fa fa-sign-out fa-fw"></i> Выход</a>
@@ -83,18 +81,20 @@
                         <a href="index.php?page=home" class="<?php echo $pageinfo['page']=='home'? "active" : "" ?>"><i class="fa fa-dashboard fa-fw"></i> Главная </a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-sitemap fa-fw"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-home fa-fw"></i> Квартира<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="#">Second Level Item</a>
+                                <a href="#"><i class="fa fa-tachometer fa-fw"></i> Обзор</a>
+                            </li>
+						
+                            <li>
+                                <a href="#">Добавить показания</a>
                             </li>
                             <li>
-                                <a href="#">Third Level <span class="fa arrow"></span></a>
-                                <ul class="nav nav-third-level">
-                                    <li>
-                                        <a href="#">Third Level Item</a>
-                                    </li>
-                                </ul>
+                                <a href="#">Вода</a>
+                            </li>
+                            <li>
+                                <a href="#">Электричество</a>
                             </li>
                         </ul>
                     </li>
