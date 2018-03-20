@@ -12,7 +12,7 @@ if(isset($_POST['submit']))
 		if($result[0]['password'] === md5(md5($_POST['password'])))
 		{
 			$hash = md5(generateCode(10));
-			dbInsert($dbconnect, "UPDATE users SET cookie_hash='".$hash."', cookie_timestamp=NOW() WHERE id='".$result[0]['id']."'");
+			dbExecuteQuery($dbconnect, "UPDATE users SET cookie_hash='".$hash."', cookie_timestamp=NOW() WHERE id='".$result[0]['id']."'");
 			// Ставим куки
 			setcookie("id", $result[0]['id'], time()+60*60*24*30);
 			setcookie("hash", $hash, time()+60*60*24*30);

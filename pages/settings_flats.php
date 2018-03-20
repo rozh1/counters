@@ -10,7 +10,7 @@ if (isset($_GET['action']))
 				$userflat = dbSelect($dbconnect, "SELECT id, name, address FROM flats WHERE user_id='".$userinfo['id']."' AND id=$flatid;");
 				if (count($userflat)>0)
 				{
-					dbInsert($dbconnect, "DELETE FROM flats WHERE id='".$flatid."'");
+					dbExecuteQuery($dbconnect, "DELETE FROM flats WHERE id='".$flatid."'");
 				}
 			break;
 			
@@ -19,7 +19,7 @@ if (isset($_GET['action']))
 			{
 				$name=$dbconnect->real_escape_string($_GET['name']);
 				$address=$dbconnect->real_escape_string($_GET['address']);
-				dbInsert($dbconnect, "INSERT INTO flats (`name`,`address`,`user_id`) VALUES('$name','$address','".$userinfo['id']."');");
+				dbExecuteQuery($dbconnect, "INSERT INTO flats (`name`,`address`,`user_id`) VALUES('$name','$address','".$userinfo['id']."');");
 			}
 			break;
 	}

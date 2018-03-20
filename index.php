@@ -46,6 +46,12 @@ if (isset($_GET['page']))
 			$pageinfo['file'] = "settings.php";
 			break;
 			
+		case "counter":
+			$pageinfo['title'] = "Показания счетчика";
+			$pageinfo['page'] = "counter";
+			$pageinfo['file'] = "counter.php";
+			break;
+			
 		default:
 			$pageinfo['title'] = "Страница не найдена";
 			$pageinfo['page'] = "error404";

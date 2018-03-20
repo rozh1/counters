@@ -31,7 +31,7 @@ if(isset($_POST['submit']))
         // Убераем лишние пробелы и делаем двойное хеширование
         $password = md5(md5(trim($_POST['password'])));
 
-        dbInsert($dbconnect, "INSERT INTO users SET login='".$login."', password='".$password."'");
+        dbExecuteQuery($dbconnect, "INSERT INTO users SET login='".$login."', password='".$password."'");
 		
 		//перенаправляем на страницу логина
         header("Location: index.php?page=login"); exit();

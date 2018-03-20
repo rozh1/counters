@@ -26,7 +26,7 @@ function dbSelect($conn, $query)
 	return $resultSet;
 }
 
-function dbInsert($conn, $query)
+function dbExecuteQuery($conn, $query)
 {
 	$result = $conn->query($query);
 	if (!$result) die ("Сбой при доступе к базе данных: " . $conn->error);

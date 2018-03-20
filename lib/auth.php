@@ -15,7 +15,7 @@ function checkAuth($conn, $redirect)
 			{
 				setcookie("id", "", time() - 3600*24*30*12, "/");
 				setcookie("hash", "", time() - 3600*24*30*12, "/");
-				dbInsert($dbconnect, "UPDATE users SET cookie_hash='".$hash."', cookie_timestamp=NOW() WHERE id='".$result[0]['id']."'");
+				dbExecuteQuery($dbconnect, "UPDATE users SET cookie_hash='".$hash."', cookie_timestamp=NOW() WHERE id='".$result[0]['id']."'");
 			}
 			else
 			{

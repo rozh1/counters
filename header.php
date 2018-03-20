@@ -81,22 +81,31 @@
                         <a href="index.php?page=home" class="<?php echo $pageinfo['page']=='home'? "active" : "" ?>"><i class="fa fa-dashboard fa-fw"></i> Главная </a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-home fa-fw"></i> Квартира<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
+					
+<?php
+$flats = dbSelect($dbconnect, "SELECT id, name FROM flats WHERE user_id='".$userinfo['id']."';");
+foreach ($flats as $flat)
+{
+	echo "<a href=\"#\"><i class=\"fa fa-home fa-fw\"></i>".$flat['name']."<span class=\"fa arrow\"></span></a>";
+	echo "<ul class=\"nav nav-second-level\">";
+	
+	$counters = dbSelect($dbconnect, "SELECT c.id as id, c.name as counter_name, number FROM counters c INNER JOIN flats f ON c.flat_id = f.id WHERE f.user_id='".$userinfo['id']."' AND f.id='".$flat['id']."' ORDER BY counter_name;");
+	
+	foreach ($counters as $counter)
+	{
+		echo "<li>";
+        echo "<a href=\"index.php?page=counter&id=".$counter['id']."\">".$counter['counter_name']."</a>";
+        echo "</li>";
+	}
+	
+	echo "</ul>";
+}
+
+?>
+                           <!-- <li>
                                 <a href="#"><i class="fa fa-tachometer fa-fw"></i> Обзор</a>
-                            </li>
+                            </li> -->
 						
-                            <li>
-                                <a href="#">Добавить показания</a>
-                            </li>
-                            <li>
-                                <a href="#">Вода</a>
-                            </li>
-                            <li>
-                                <a href="#">Электричество</a>
-                            </li>
-                        </ul>
                     </li>
                 </ul>
 
