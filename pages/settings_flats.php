@@ -1,8 +1,8 @@
 <?php
-if (isset($_GET['action']))
+if (isset($_POST['action']))
 {
-	$action = $_GET['action'];
-	$flatid = isset($_GET['id']) ? intval($_GET['id']) : 0;
+	$action = $_POST['action'];
+	$flatid = isset($_POST['id']) ? intval($_POST['id']) : 0;
 	
 	switch($action)
 	{
@@ -15,10 +15,10 @@ if (isset($_GET['action']))
 			break;
 			
 		case "add":
-			if (isset($_GET['name']) && isset($_GET['address']))
+			if (isset($_POST['name']) && isset($_POST['address']))
 			{
-				$name=$dbconnect->real_escape_string($_GET['name']);
-				$address=$dbconnect->real_escape_string($_GET['address']);
+				$name=$dbconnect->real_escape_string($_POST['name']);
+				$address=$dbconnect->real_escape_string($_POST['address']);
 				dbExecuteQuery($dbconnect, "INSERT INTO flats (`name`,`address`,`user_id`) VALUES('$name','$address','".$userinfo['id']."');");
 			}
 			break;
@@ -45,7 +45,14 @@ $flats = dbSelect($dbconnect, "SELECT id, name, address FROM flats WHERE user_id
 
 foreach ($flats as $flat)
 {
-	echo "<tr><td>".$flat['name']."</td><td>".$flat['address']."</td><td><a href=\"index.php?page=settings&settingpage=flats&action=delete&id=".$flat['id']."\">Удалить</a></td></tr>";
+	echo "<tr><td>".$flat['name']."</td><td>".$flat['address']."</td>
+	<td>
+		<form action=\"index.php?page=settings&settingpage=flats\" method=\"POST\">
+			<input type=\"hidden\" name=\"action\" value=\"delete\">
+			<input type=\"hidden\" name=\"id\" value=\"".$flat['id']."\">
+			<input class=\"btn btn-danger\" type=\"submit\" name=\"submit\" value=\"Удалить\">
+		</form>
+	</td></tr>";
 }
 
 ?>
@@ -58,7 +65,7 @@ foreach ($flats as $flat)
 
 <div class="row">
     <div class="col-lg-12">
-        <form role="form" method="GET" action="index.php" class="form-inline">
+        <form role="form" method="POST" action="index.php?page=settings&settingpage=flats" class="form-inline">
                                             <div class="form-group">
                                                 <label>Название квартиры</label>
                                                 <input class="form-control" name="name">
@@ -68,8 +75,6 @@ foreach ($flats as $flat)
                                                 <input class="form-control" name="address">
                                             </div>
                                             <input type="submit" class="btn btn-primary" value="Добавить">
-                                            <input type="hidden" name="page" value="settings">
-                                            <input type="hidden" name="settingpage" value="flats">
                                             <input type="hidden" name="action" value="add">
                                         </form>
     </div>

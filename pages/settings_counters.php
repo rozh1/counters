@@ -1,8 +1,8 @@
 <?php
-if (isset($_GET['action']))
+if (isset($_POST['action']))
 {
-	$action = $_GET['action'];
-	$counterid = isset($_GET['id']) ? intval($_GET['id']) : 0;
+	$action = $_POST['action'];
+	$counterid = isset($_POST['id']) ? intval($_POST['id']) : 0;
 	
 	switch($action)
 	{
@@ -15,18 +15,18 @@ if (isset($_GET['action']))
 			break;
 			
 		case "add":
-			if (isset($_GET['name']) && isset($_GET['number']) && isset($_GET['flatid']))
+			if (isset($_POST['name']) && isset($_POST['number']) && isset($_POST['flatid']))
 			{
-				$name=$dbconnect->real_escape_string($_GET['name']);
-				$number=$dbconnect->real_escape_string($_GET['number']);
-				$flatid=$dbconnect->real_escape_string($_GET['flatid']);
+				$name=$dbconnect->real_escape_string($_POST['name']);
+				$number=$dbconnect->real_escape_string($_POST['number']);
+				$flatid=$dbconnect->real_escape_string($_POST['flatid']);
 				dbExecuteQuery($dbconnect, "INSERT INTO counters (`name`,`number`,`flat_id`) VALUES('$name','$number','$flatid');");
 			}
 			break;
 	}
 }
 
-$counters = dbSelect($dbconnect, "SELECT c.id as id, f.name as flat_name, c.name as counter_name, number FROM counters c INNER JOIN flats f ON c.flat_id = f.id WHERE f.user_id='".$userinfo['id']."' ORDER BY flat_name;");
+$counters = dbSelect($dbconnect, "SELECT c.id as id, f.name as flat_name, c.name as counter_name, number FROM counters c INNER JOIN flats f ON c.flat_id = f.id WHERE f.user_id='".$userinfo['id']."' ORDER BY flat_name, counter_name;");
 $flats = dbSelect($dbconnect, "SELECT id, name, address FROM flats WHERE user_id='".$userinfo['id']."';");
 ?>
 
@@ -47,7 +47,14 @@ $flats = dbSelect($dbconnect, "SELECT id, name, address FROM flats WHERE user_id
 
 foreach ($counters as $counter)
 {
-	echo "<tr><td>".$counter['flat_name']."</td><td>".$counter['counter_name']."</td><td>".$counter['number']."</td><td><a href=\"index.php?page=settings&settingpage=counters&action=delete&id=".$counter['id']."\">Удалить</a></td></tr>";
+	echo "<tr><td>".$counter['flat_name']."</td><td>".$counter['counter_name']."</td><td>".$counter['number']."</td>
+	<td>
+		<form action=\"index.php?page=settings&settingpage=counters\" method=\"POST\">
+			<input type=\"hidden\" name=\"action\" value=\"delete\">
+			<input type=\"hidden\" name=\"id\" value=\"".$counter['id']."\">
+			<input class=\"btn btn-danger\" type=\"submit\" name=\"submit\" value=\"Удалить\">
+		</form>
+	</td></tr>";
 }
 
 ?>
@@ -60,7 +67,7 @@ foreach ($counters as $counter)
 
 <div class="row">
     <div class="col-lg-12">
-        <form role="form" method="GET" action="index.php" class="form-inline">
+        <form role="form" method="POST" action="index.php?page=settings&settingpage=counters" class="form-inline">
                                             <div class="form-group">
                                                 <label>Квартира</label>
 												<select class="form-control" name="flatid">
@@ -82,8 +89,6 @@ foreach ($flats as $flat)
                                                 <input class="form-control" name="number">
                                             </div>
                                             <input type="submit" class="btn btn-primary" value="Добавить">
-                                            <input type="hidden" name="page" value="settings">
-                                            <input type="hidden" name="settingpage" value="counters">
                                             <input type="hidden" name="action" value="add">
                                         </form>
     </div>
